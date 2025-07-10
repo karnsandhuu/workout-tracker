@@ -2,7 +2,7 @@
 
 ## Workout Tracker & Progress Planner
 
-What I’ve decided to do for my term project is a Workout Tracker and Progress Planner.
+What I’ve decided to do for my term project is a **Workout Tracker and Progress Planner**.
 
 ### What will the application do?
 - Help users create and manage their workout routines
@@ -10,7 +10,7 @@ What I’ve decided to do for my term project is a Workout Tracker and Progress 
 - Analyze personal records and track progress over time
 - Plan and customize future workouts
 
-Some **features** include:
+Some ***features*** include:
 - Tracking dates of workouts
 - Recording rep ranges, sets, and weight used
 - Saving and loading progress for personal review
