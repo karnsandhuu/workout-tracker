@@ -22,7 +22,7 @@ This app is designed for everyone, from students and beginners to experienced li
 This project interests me because I recently started my own working out journey. Most apps I’ve tried are either filled with unnecessary ads or too complicated. When it came to just using the notes app, it feels tedious and not structured how I'd want it. I want to build something simple and offline to track my training.
 
 ## User Stories
-As a user, I want to be able to add an exercise to my workout session, including details such as the date, number of sets, reps done, etc.
-As a user, I want to be able to view a list of all my past workout sessions along with their dates.
-As a user, I want to be able to analyze my progress by viewing my personal records for each exercise.
-As a user, I want to be able to edit the details of my past workout sessions (including things like reps, sets, weight used, etc.)
+- As a user, I want to be able to add an exercise to my workout session, including details such as the date, number of sets, reps done, etc.
+- As a user, I want to be able to view a list of all my past workout sessions along with their dates.
+- As a user, I want to be able to analyze my progress by viewing my personal records for each exercise.
+- As a user, I want to be able to edit the details of my past workout sessions (including things like reps, sets, weight used, etc.)
