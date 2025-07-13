@@ -7,17 +7,17 @@ public class WorkoutSession {
     private String date;
     private List<Exercise> exercises;
 
-    //REQUIRES: Date is not null as well as empty
+    //REQUIRES: Date is not null and not empty
     //EFFECTS: Creates an empty workout session with only a date
     public WorkoutSession(String date) {
         //
     }
 
-    //REQUIRES: value e is not null
+    //REQUIRES: value of e is not null
     //MODIFIES: this
     //EFFECTS: Adds exercise into workout session
     public void addExercise(Exercise e) {
-
+        //
     }
 
     //EFFECTS: Returns exercise for this workout session
