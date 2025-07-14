@@ -4,6 +4,7 @@ import model.Exercise;
 import model.WorkoutLog;
 import model.WorkoutSession;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class WorkoutTrackerApp {
@@ -35,6 +36,8 @@ public class WorkoutTrackerApp {
                 viewWorkoutSessions();
             } else if (command.equals("p")) {
                 viewPersonalRecord();
+            } else if (command.equals("s")) {
+                searchExerciseAcrossSessions();
             } else if (command.equals("q")) {
                 stillRunning = false;
                 System.out.println("Exiting Tracker");
@@ -48,18 +51,20 @@ public class WorkoutTrackerApp {
     //EFFECTS: displays a menu of options to the user
     // Source: Teller Application
     private void displayMenu() {
-        System.out.println("\nMenu:");
+        System.out.println("\nWorkout Tracker Menu:");
         System.out.println("\tn -> Create new workout session");
         System.out.println("\tv -> View workout sessions");
         System.out.println("\tp -> View personal record");
+        System.out.println("\ts -> Search exercise by name");
         System.out.println("\tq -> Quit");
         System.out.print("\nEnter choice:");
     }
 
     //EFFECTS: asks user for workout date and then asks user for exercise(s) info
     //         then creates a workout session to add to workout log
+    @SuppressWarnings("methodlength")
     private void addWorkoutSession() {
-        System.out.print("\n Enter workout date: (mm/dd/yy):");
+        System.out.print("\nEnter workout date: (mm/dd/yy):");
         String date = input.nextLine();
         WorkoutSession session = new WorkoutSession(date);
 
@@ -84,7 +89,6 @@ public class WorkoutTrackerApp {
 
         log.addWorkoutSession(session);
         System.out.println("Workout session added to log!");
-
     }
 
     //EFFECTS: showcases all workout sessions that have been added to workout log
@@ -99,17 +103,32 @@ public class WorkoutTrackerApp {
             }
         }
     }
-
+    //REQUIRES: Exercise name is 
     //EFFECTS: displays personal record for given exercise
     private void viewPersonalRecord() {
-        System.out.print("Enter exercise name to check PR: ");
+        System.out.print("\nEnter exercise name to check PR: ");
         String name = input.nextLine();
         int pr = log.getPersonalRecord(name);
 
         if (pr == 0) {
-            System.out.println("No personal record found for " + name);
+            System.out.println("\nNo personal record found for " + name);
         } else {
-            System.out.println("Personal record for " + name + ": " + pr + " lbs");
+            System.out.println("\nPersonal record for " + name + ": " + pr + " lbs");
         }
     }
+
+    private void searchExerciseAcrossSessions() {
+    System.out.print("\nEnter exercise name to search: ");
+    String name = input.nextLine();
+    List<String> dates = log.getSessionDatesWithExercise(name);
+
+    if (dates.isEmpty()) {
+        System.out.println("No sessions found with exercise: " + name);
+    } else {
+        System.out.println("Exercise \"" + name + "\" was done on:");
+        for (String date : dates) {
+            System.out.println(" - " + date);
+        }
+    }
+}
 }

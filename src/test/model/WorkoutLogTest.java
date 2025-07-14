@@ -38,6 +38,7 @@ public class WorkoutLogTest {
     @Test
     void testGetPersonalRecord() {
         log.addWorkoutSession(session);
+
         int squatPr = log.getPersonalRecord("Squat");
         assertEquals(0, squatPr);
 
@@ -54,9 +55,29 @@ public class WorkoutLogTest {
         log.addWorkoutSession(session3);
 
         int benchPR = log.getPersonalRecord("Bench Press");
-
         assertEquals(185, benchPR);
-
     }
+    @Test
+    void testGetWorkoutDatesByExerciseName() {
+        WorkoutSession session2 = new WorkoutSession("07/11/2025");
 
+        Exercise squat = new Exercise("Squat", 5, 3, 200);
+    
+        session2.addExercise(squat);
+    
+        log.addWorkoutSession(session);
+        log.addWorkoutSession(session2);
+    
+        List<String> result1 = log.getSessionDatesWithExercise("Bench Press");
+        List<String> result2 = log.getSessionDatesWithExercise("Squat");
+        List<String> result3 = log.getSessionDatesWithExercise("Deadlift");
+    
+        assertEquals(1, result1.size());
+        assertEquals("07/12/2025", result1.get(0));
+    
+        assertEquals(1, result2.size());
+        assertEquals("07/11/2025", result2.get(0));
+    
+        assertTrue(result3.isEmpty());
+    }
 }

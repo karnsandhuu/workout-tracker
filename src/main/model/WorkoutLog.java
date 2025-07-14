@@ -50,4 +50,17 @@ public class WorkoutLog {
 
     }
 
+    // EFFECTS: returns a list of dates where the given exercise was performed
+    public List<String> getSessionDatesWithExercise(String exerciseName) {
+        List<String> sameDates = new ArrayList<>();
+        for (WorkoutSession session : sessions) {
+            for (Exercise exercise : session.getExercises()) {
+                if (exercise.getName().equalsIgnoreCase(exerciseName)) {
+                    sameDates.add(session.getDate());
+                }
+            }
+        }
+        return sameDates;
+    }
+
 }
