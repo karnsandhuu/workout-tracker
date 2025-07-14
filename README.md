@@ -26,4 +26,6 @@ This project interests me because I recently started my own working out journey.
 - As a user, I want to be able to view a list of all my past workout sessions along with their dates.
 - As a user, I want to be able to analyze my progress by viewing my personal records for each exercise.
 - As a user, I want to search for an exercise name and see which workout sessions included it.
+- As a user, I want to set a target PR for a specific exercise.
+- As a user, I want to see the exercise I perform most frequently.
 - As a user, I want to be able to edit the details of my past workout sessions (including things like reps, sets, weight used, etc.)
