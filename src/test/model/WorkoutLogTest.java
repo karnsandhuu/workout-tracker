@@ -13,7 +13,6 @@ public class WorkoutLogTest {
     private WorkoutSession session;
     private Exercise benchPress;
 
-
     @BeforeEach
     void runBefore() {
         log = new WorkoutLog();
@@ -42,7 +41,6 @@ public class WorkoutLogTest {
         int squatPr = log.getPersonalRecord("Squat");
         assertEquals(0, squatPr);
 
-
         Exercise secondBench = new Exercise("Bench Press", 8, 4, 185);
         Exercise thirdBench = new Exercise("Bench Press", 6, 3, 115);
 
@@ -56,11 +54,9 @@ public class WorkoutLogTest {
         log.addWorkoutSession(session3);
 
         int benchPR = log.getPersonalRecord("Bench Press");
-        
+
         assertEquals(185, benchPR);
 
-
     }
-
 
 }

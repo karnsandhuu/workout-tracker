@@ -12,6 +12,7 @@ public class WorkoutTrackerApp {
     private Scanner input;
 
     //EFFECTS: Runs the app
+    // Source: Teller Application
     public WorkoutTrackerApp() {
         log = new WorkoutLog();
         input = new Scanner(System.in);
@@ -27,6 +28,7 @@ public class WorkoutTrackerApp {
             displayMenu();
             String command = input.nextLine();
 
+            // Source: Teller Application
             if (command.equals("n")) {
                 addWorkoutSession();
             } else if (command.equals("v")) {
@@ -44,6 +46,7 @@ public class WorkoutTrackerApp {
     }
 
     //EFFECTS: displays a menu of options to the user
+    // Source: Teller Application
     private void displayMenu() {
         System.out.println("\nMenu:");
         System.out.println("\tn -> Create new workout session");
