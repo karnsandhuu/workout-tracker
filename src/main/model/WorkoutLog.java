@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 // This represents a workout log containing all of a person's past workout sessions
 public class WorkoutLog {
 
@@ -61,6 +64,19 @@ public class WorkoutLog {
             }
         }
         return sameDates;
+    }
+
+    // EFFECTS: returns this workout log as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray sessionsArray = new JSONArray();
+
+        for (WorkoutSession session : sessions) {
+            sessionsArray.put(session.toJson());
+        }
+
+        json.put("sessions", sessionsArray);
+        return json;
     }
 
 }

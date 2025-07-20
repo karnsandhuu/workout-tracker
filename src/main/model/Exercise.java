@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // This represents an exercise done during a workout
 // includes information such as exercise name, reps, sets and weight
 public class Exercise {
@@ -36,5 +38,14 @@ public class Exercise {
     // EFFECTS: returns the weight used
     public int getWeight() {
         return weight;
+    }
+    // EFFECTS: returns this exercise as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("reps", reps);
+        json.put("sets", sets);
+        json.put("weight", weight);
+        return json;
     }
 }
