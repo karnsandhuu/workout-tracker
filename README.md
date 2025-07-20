@@ -29,3 +29,5 @@ This project interests me because I recently started my own working out journey.
 - As a user, I want to set a target PR for a specific exercise.
 - As a user, I want to see the exercise I perform most frequently.
 - As a user, I want to be able to edit the details of my past workout sessions (including things like reps, sets, weight used, etc.)
+- As a user, I want the option to save my workout log to file so I can keep the history of my workouts.
+- As a user, I want the option to load my workout log from file so I can view previous workouts or continue them.
