@@ -6,6 +6,8 @@ import model.WorkoutSession;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -146,11 +148,25 @@ public class WorkoutTrackerApp {
 
     // EFFECTS: saves the current workout log to file
     private void saveWorkoutLog() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(log);
+            jsonWriter.close();
+            System.out.println("Saved workout log to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
+
 
     // MODIFIES: this
     // EFFECTS: loads workout log from file
     private void loadWorkoutLog() {
-
+        try {
+            log = jsonReader.read();
+            System.out.println("Loaded workout log from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }
