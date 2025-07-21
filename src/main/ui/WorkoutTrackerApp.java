@@ -45,8 +45,12 @@ public class WorkoutTrackerApp {
                 viewWorkoutSessions();
             } else if (command.equals("p")) {
                 viewPersonalRecord();
-            } else if (command.equals("s")) {
+            } else if (command.equals("e")) {
                 searchExerciseAcrossSessions();
+            } else if (command.equals("s")) {
+                saveWorkoutLog();
+            } else if (command.equals("l")) {
+                loadWorkoutLog();
             } else if (command.equals("q")) {
                 stillRunning = false;
                 System.out.println("Exiting Tracker");
@@ -64,7 +68,9 @@ public class WorkoutTrackerApp {
         System.out.println("\tn -> Create new workout session");
         System.out.println("\tv -> View workout sessions");
         System.out.println("\tp -> View personal record");
-        System.out.println("\ts -> Search exercise by name");
+        System.out.println("\te -> Search exercise by name");
+        System.out.println("\ts -> Save workout log to file");
+        System.out.println("\tl -> Load workout log from file");
         System.out.println("\tq -> Quit");
         System.out.print("\nEnter choice:");
     }
