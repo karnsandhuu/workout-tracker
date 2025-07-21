@@ -3,6 +3,8 @@ package ui;
 import model.Exercise;
 import model.WorkoutLog;
 import model.WorkoutSession;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,12 +13,17 @@ public class WorkoutTrackerApp {
 
     private WorkoutLog log;
     private Scanner input;
+    private static final String JSON_STORE = "./data/workoutlog.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: Runs the app
     // Source: Teller Application
     public WorkoutTrackerApp() {
         log = new WorkoutLog();
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runWorkoutTracker();
     }
 
@@ -135,5 +142,15 @@ public class WorkoutTrackerApp {
                 System.out.println(" - " + date);
             }
         }
+    }
+
+    // EFFECTS: saves the current workout log to file
+    private void saveWorkoutLog() {
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workout log from file
+    private void loadWorkoutLog() {
+
     }
 }
