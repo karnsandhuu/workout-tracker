@@ -69,11 +69,11 @@ class JsonWriterTest {
             writer.open();
             writer.write(log);
             writer.close();
-    
+
             JsonReader reader = new JsonReader("./data/testWriterGeneralWorkoutLog.json");
             WorkoutLog loadedLog = reader.read();
             List<WorkoutSession> sessions = loadedLog.getSessions();
-    
+
             assertEquals(2, sessions.size());
             assertEquals("2025-07-20", sessions.get(0).getDate());
             assertEquals("Bench Press", sessions.get(0).getExercises().get(0).getName());

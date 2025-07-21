@@ -39,6 +39,7 @@ public class Exercise {
     public int getWeight() {
         return weight;
     }
+
     // EFFECTS: returns this exercise as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

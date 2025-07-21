@@ -164,7 +164,6 @@ public class WorkoutTrackerApp {
         }
     }
 
-
     // MODIFIES: this
     // EFFECTS: loads workout log from file
     private void loadWorkoutLog() {

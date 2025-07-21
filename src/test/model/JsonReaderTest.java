@@ -8,7 +8,6 @@ import persistence.JsonReader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Unit tests for JsonReader
 public class JsonReaderTest {
 
     @Test
@@ -18,7 +17,7 @@ public class JsonReaderTest {
             reader.read();
             fail("IOException expected");
         } catch (IOException e) {
-            // expected
+            // pass
         }
     }
 
@@ -41,7 +40,6 @@ public class JsonReaderTest {
             List<WorkoutSession> sessions = log.getSessions();
             assertEquals(1, sessions.size());
 
-            // Session 1
             WorkoutSession s1 = sessions.get(0);
             assertEquals("2025-07-20", s1.getDate());
             List<Exercise> exercises1 = s1.getExercises();
