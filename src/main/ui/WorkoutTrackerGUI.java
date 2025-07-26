@@ -2,6 +2,7 @@ package ui;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public class WorkoutTrackerGUI extends JFrame {
@@ -28,8 +29,35 @@ public class WorkoutTrackerGUI extends JFrame {
     }
 
     private void loadTabs() {
-        JPanel addWorkoutTab = new JPanel(); 
+        JPanel addWorkoutTab = createAddWorkoutTab(); 
         sidebar.add(addWorkoutTab, ADD_TAB_INDEX);
         sidebar.setTitleAt(ADD_TAB_INDEX, "Add Workout");
 }
+
+private JPanel createAddWorkoutTab() {
+    JPanel panel = new JPanel(new BorderLayout());
+
+    JTextField dateField = new JTextField(1);
+    JTextField nameField = new JTextField(10);
+    JTextField repsField = new JTextField(5);
+    JTextField setsField = new JTextField(5);
+    JTextField weightField = new JTextField(5);
+
+    JPanel formPanel = new JPanel(new GridLayout(5, 1, 2, 8)); 
+    formPanel.add(createRow("Date (MM/DD/YY):", dateField));
+    formPanel.add(createRow("Exercise:", nameField));
+    formPanel.add(createRow("Reps:", repsField));
+    formPanel.add(createRow("Sets:", setsField));
+    formPanel.add(createRow("Weight (lbs):", weightField));
+
+    return panel;
+}
+
+private JPanel createRow(String labelText, JTextField textField) {
+    JPanel row = new JPanel(new GridLayout(2, 1));
+    row.add(new JLabel(labelText));
+    row.add(textField);
+    return row;
+}
+
 }
