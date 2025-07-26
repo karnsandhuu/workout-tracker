@@ -50,6 +50,8 @@ private JPanel createAddWorkoutTab() {
     formPanel.add(createRow("Sets:", setsField));
     formPanel.add(createRow("Weight (lbs):", weightField));
 
+    panel.add(formPanel, BorderLayout.NORTH);
+
     return panel;
 }
 
