@@ -11,6 +11,10 @@ public class WorkoutTrackerGUI extends JFrame {
     public static final int ADD_TAB_INDEX = 0;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 500;
+    public static final int REPORT_TAB_INDEX = 1;
+
+    private JTextArea reportText;
+    private JScrollPane reportPane; 
 
     private WorkoutSession currentSession;
     private JTabbedPane sidebar;
@@ -35,6 +39,10 @@ public class WorkoutTrackerGUI extends JFrame {
         JPanel addWorkoutTab = createAddWorkoutTab();
         sidebar.add(addWorkoutTab, ADD_TAB_INDEX);
         sidebar.setTitleAt(ADD_TAB_INDEX, "Add Workout");
+        JPanel reportTab = createReportTab();
+
+        sidebar.add(reportTab, REPORT_TAB_INDEX); 
+        sidebar.setTitleAt(REPORT_TAB_INDEX, "Workout Report"); 
     }
 
     private JPanel createAddWorkoutTab() {
@@ -97,6 +105,33 @@ public class WorkoutTrackerGUI extends JFrame {
         p.add(b);
         return p;
 
+    }
+
+
+    private JPanel createReportTab() {
+        JPanel panel = new JPanel(new BorderLayout());
+    
+        JButton showButton = new JButton("Show Exercises");
+        showButton.setActionCommand("ShowExercises");
+    
+        reportText = new JTextArea(10, 40);
+        reportText.setEditable(true);
+        reportPane = new JScrollPane(reportText);
+    
+        showButton.addActionListener(e -> {
+            if (e.getActionCommand().equals("ShowExercises")) {
+                if (currentSession != null) {
+                    reportText.setText(currentSession.getExerciseDetails());
+                } else {
+                    reportText.setText("No workout session found.");
+                }
+            }
+        });
+    
+        panel.add(formatButtonRow(showButton), BorderLayout.NORTH);
+        panel.add(reportPane, BorderLayout.CENTER);
+    
+        return panel;
     }
 
 }
