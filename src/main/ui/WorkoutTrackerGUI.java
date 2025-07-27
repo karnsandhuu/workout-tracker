@@ -2,6 +2,10 @@ package ui;
 
 
 import javax.swing.*;
+
+import model.Exercise;
+import model.WorkoutSession;
+
 import java.awt.*;
 
 
@@ -9,7 +13,8 @@ public class WorkoutTrackerGUI extends JFrame {
     public static final int ADD_TAB_INDEX = 0;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 500;
-
+    
+    private WorkoutSession currentSession;
     private JTabbedPane sidebar;
 
     public static void main(String[] args) {
@@ -35,9 +40,10 @@ public class WorkoutTrackerGUI extends JFrame {
 }
 
 private JPanel createAddWorkoutTab() {
+
     JPanel panel = new JPanel(new BorderLayout());
 
-    JTextField dateField = new JTextField(1);
+    JTextField dateField = new JTextField(10);
     JTextField nameField = new JTextField(10);
     JTextField repsField = new JTextField(5);
     JTextField setsField = new JTextField(5);
@@ -50,21 +56,29 @@ private JPanel createAddWorkoutTab() {
     formPanel.add(createRow("Sets:", setsField));
     formPanel.add(createRow("Weight (lbs):", weightField));
 
-    JButton addExerciseButton = new JButton("Add Exercise");
-    JPanel buttonPanel = new JPanel(new FlowLayout());
-    buttonPanel.add(addExerciseButton);
+    JButton addButton = new JButton("Add Exercise");
+    addButton.setActionCommand("AddExercise");
+    panel.add(formatButtonRow(addButton));
 
     panel.add(formPanel, BorderLayout.NORTH);
-    panel.add(buttonPanel, BorderLayout.CENTER);
 
     return panel;
 }
 
 private JPanel createRow(String labelText, JTextField textField) {
-    JPanel row = new JPanel(new GridLayout(2, 1));
+    JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
     row.add(new JLabel(labelText));
     row.add(textField);
     return row;
 }
+private JPanel formatButtonRow(JButton b) {
+    JPanel p = new JPanel(new FlowLayout());
+    p.add(b);
+    return p;
+    
+}
+
+
 
 }
+
