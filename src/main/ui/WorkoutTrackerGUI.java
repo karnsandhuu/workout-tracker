@@ -89,15 +89,13 @@ public class WorkoutTrackerGUI extends JFrame {
                 int sets = Integer.parseInt((setsField.getText()));
                 int weight = Integer.parseInt((weightField.getText()));
 
-                if (currentSession == null) {
+                if (currentSession == null || !currentSession.getDate().equals(date)) {
                     currentSession = new WorkoutSession(date);
+                    workoutLog.addWorkoutSession(currentSession);
                 }
-
                 Exercise newExercise = new Exercise(name, reps, sets, weight);
                 currentSession.addExercise(newExercise);
-                workoutLog.addWorkoutSession(currentSession);
-
-                System.out.println("Added: " + name + " - " + sets + " sets of " + reps + " reps with " + weight + " lbs");
+                
             }
         });
 
@@ -149,7 +147,7 @@ public class WorkoutTrackerGUI extends JFrame {
                         for (Exercise exercise : session.getExercises()) {
                             report.append("- ").append(exercise.getName())
                                   .append(": ").append(exercise.getSets()).append(" sets of ")
-                                  .append(exercise.getReps()).append(" reps with")
+                                  .append(exercise.getReps()).append(" reps with ")
                                   .append(exercise.getWeight()).append(" lbs\n");
                         }
                     }
