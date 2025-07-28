@@ -3,21 +3,29 @@ package ui;
 import javax.swing.*;
 
 import model.Exercise;
+import model.WorkoutLog;
 import model.WorkoutSession;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class WorkoutTrackerGUI extends JFrame {
     public static final int ADD_TAB_INDEX = 0;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 500;
     public static final int REPORT_TAB_INDEX = 1;
+    public static final int SETTINGS_TAB_INDEX = 2;
+
+    public static final String SAVE_FILE = "./workoutlog.json";
 
     private JTextArea reportText;
     private JScrollPane reportPane; 
 
     private WorkoutSession currentSession;
     private JTabbedPane sidebar;
+    private WorkoutLog workoutLog;
 
     public static void main(String[] args) {
         new WorkoutTrackerGUI();
@@ -31,6 +39,7 @@ public class WorkoutTrackerGUI extends JFrame {
         sidebar.setTabPlacement(JTabbedPane.LEFT);
         loadTabs();
         add(sidebar);
+        workoutLog = new WorkoutLog();
 
         setVisible(true);
     }
@@ -43,7 +52,11 @@ public class WorkoutTrackerGUI extends JFrame {
 
         sidebar.add(reportTab, REPORT_TAB_INDEX); 
         sidebar.setTitleAt(REPORT_TAB_INDEX, "Workout Report"); 
-    }
+
+        JPanel settingsTab = createSettingsTab();
+        sidebar.add(settingsTab, SETTINGS_TAB_INDEX);
+         sidebar.setTitleAt(SETTINGS_TAB_INDEX, "Load/Save");
+        }
 
     private JPanel createAddWorkoutTab() {
 
@@ -81,6 +94,7 @@ public class WorkoutTrackerGUI extends JFrame {
 
                 Exercise newExercise = new Exercise(name, reps, sets, weight);
                 currentSession.addExercise(newExercise);
+                workoutLog.addWorkoutSession(currentSession);
 
                 System.out.println("Added: " + name + " - " + sets + " sets of " + reps + " reps with " + weight + " lbs");
             }
@@ -107,7 +121,6 @@ public class WorkoutTrackerGUI extends JFrame {
 
     }
 
-
     private JPanel createReportTab() {
         JPanel panel = new JPanel(new BorderLayout());
     
@@ -120,10 +133,20 @@ public class WorkoutTrackerGUI extends JFrame {
     
         showButton.addActionListener(e -> {
             if (e.getActionCommand().equals("ShowExercises")) {
-                if (currentSession != null) {
-                    reportText.setText(currentSession.getExerciseDetails());
+                if (workoutLog.getSessionCount() > 0) {
+                    StringBuilder report = new StringBuilder();
+                    for (WorkoutSession session : workoutLog.getSessions()) {
+                        report.append("Date: ").append(session.getDate()).append("\n");
+                        for (Exercise exercise : session.getExercises()) {
+                            report.append("- ").append(exercise.getName())
+                                  .append(": ").append(exercise.getSets()).append(" sets of ")
+                                  .append(exercise.getReps()).append(" reps with")
+                                  .append(exercise.getWeight()).append(" lbs\n");
+                        }
+                    }
+                    reportText.setText(report.toString());
                 } else {
-                    reportText.setText("No workout session found.");
+                    reportText.setText("No workout sessions available.");
                 }
             }
         });
@@ -133,5 +156,51 @@ public class WorkoutTrackerGUI extends JFrame {
     
         return panel;
     }
+
+    private JPanel createSettingsTab() {
+    JPanel panel = new JPanel(new BorderLayout());
+
+    JButton saveButton = new JButton("Save Log");
+    saveButton.setActionCommand("Save");
+    JButton loadButton = new JButton("Load Log");
+    loadButton.setActionCommand("Load");
+
+    JLabel statusLabel = new JLabel("Status: Ready");
+
+    saveButton.addActionListener(e -> {
+        if (e.getActionCommand().equals("Save")) {
+            try {
+                JsonWriter writer = new JsonWriter(SAVE_FILE);
+                writer.open();
+                writer.write(workoutLog);
+                writer.close();
+                statusLabel.setText("Status: Saved successfully.");
+            } catch (Exception ex) {
+                statusLabel.setText("Status: Save failed.");
+            }
+        }
+    });
+
+    loadButton.addActionListener(e -> {
+        if (e.getActionCommand().equals("Load")) {
+            try {
+                JsonReader reader = new JsonReader(SAVE_FILE);
+                workoutLog = reader.read();
+                currentSession = null; 
+                statusLabel.setText("Status: Log loaded.");
+            } catch (Exception ex) {
+                statusLabel.setText("Status: Load failed.");
+            }
+        }
+    });
+
+    JPanel buttons = new JPanel(new FlowLayout());
+    buttons.add(saveButton);
+    buttons.add(loadButton);
+
+    panel.add(buttons, BorderLayout.NORTH);
+    panel.add(statusLabel, BorderLayout.SOUTH);
+    return panel;
+}
 
 }
