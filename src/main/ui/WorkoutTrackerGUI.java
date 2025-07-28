@@ -60,7 +60,8 @@ public class WorkoutTrackerGUI extends JFrame {
 
     private JPanel createAddWorkoutTab() {
 
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
 
         JTextField dateField = new JTextField(10);
         JTextField nameField = new JTextField(10);
@@ -100,9 +101,17 @@ public class WorkoutTrackerGUI extends JFrame {
             }
         });
 
-        panel.add(formatButtonRow(addButton));
+        ImageIcon dumbbellIcon = new ImageIcon("./data/dumbbell.jpg");
+        Image scaledImage = dumbbellIcon.getImage().getScaledInstance(300, 150, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(resizedIcon);
+        JPanel imagePanel = new JPanel();
+        imagePanel.add(imageLabel);
 
-        panel.add(formPanel, BorderLayout.NORTH);
+        panel.add(formPanel);                    
+        panel.add(formatButtonRow(addButton));   
+        panel.add(imagePanel);  
+
 
         return panel;
     }
