@@ -35,4 +35,21 @@ public class WorkoutSessionTest {
         assertEquals(135, exercises.get(0).getWeight());
 
     }
+
+    @Test
+    void testGetExerciseDetails() {
+        WorkoutSession session = new WorkoutSession("07/26/25");
+        assertEquals("No exercises recorded.", session.getExerciseDetails());
+
+        Exercise e1 = new Exercise("Squats", 8, 3, 135);
+        Exercise e2 = new Exercise("Bench", 5, 3, 185);
+        session.addExercise(e1);
+        session.addExercise(e2);
+
+        String details = session.getExerciseDetails();
+
+        assertTrue(details.contains("Workout on 07/26/25:"));
+        assertTrue(details.contains("- Squats: 3 sets of 8 reps @ 135 lbs"));
+        assertTrue(details.contains("- Bench: 3 sets of 5 reps @ 185 lbs"));
+    }
 }
