@@ -1,0 +1,28 @@
+{"sessions": [
+    {
+        "date": "2025-07-20",
+        "exercises": [
+            {
+                "reps": 5,
+                "sets": 3,
+                "name": "Bench Press",
+                "weight": 135
+            },
+            {
+                "reps": 6,
+                "sets": 4,
+                "name": "Squat",
+                "weight": 185
+            }
+        ]
+    },
+    {
+        "date": "2025-07-18",
+        "exercises": [{
+            "reps": 5,
+            "sets": 3,
+            "name": "Deadlift",
+            "weight": 225
+        }]
+    }
+]}

@@ -24,6 +24,7 @@ public class WorkoutSession {
     // EFFECTS: Adds exercise into workout session
     public void addExercise(Exercise exercise) {
         exercises.add(exercise);
+
     }
 
     // EFFECTS: Returns exercises for this workout session
@@ -48,6 +49,23 @@ public class WorkoutSession {
 
         json.put("exercises", exercisesArray);
         return json;
+    }
+
+    // EFFECTS: returns a formatted string of all exercises in the session
+    public String getExerciseDetails() {
+        if (exercises.isEmpty()) {
+            return "No exercises recorded.";
+        }
+
+        StringBuilder exercise = new StringBuilder();
+        exercise.append("Workout on ").append(date).append(":\n\n");
+        for (Exercise e : exercises) {
+            exercise.append("- ").append(e.getName())
+                    .append(": ").append(e.getSets()).append(" sets of ")
+                    .append(e.getReps()).append(" reps @ ")
+                    .append(e.getWeight()).append(" lbs\n");
+        }
+        return exercise.toString();
     }
 
 }

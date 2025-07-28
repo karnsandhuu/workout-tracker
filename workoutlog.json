@@ -1,0 +1,36 @@
+{"sessions": [
+    {
+        "date": "12/24/25",
+        "exercises": [
+            {
+                "reps": 5,
+                "sets": 10,
+                "name": "bench press",
+                "weight": 135
+            },
+            {
+                "reps": 5,
+                "sets": 10,
+                "name": "squat",
+                "weight": 135
+            }
+        ]
+    },
+    {
+        "date": "12/24/25",
+        "exercises": [
+            {
+                "reps": 12,
+                "sets": 12,
+                "name": "bench press",
+                "weight": 12
+            },
+            {
+                "reps": 12,
+                "sets": 12,
+                "name": "leg press",
+                "weight": 12
+            }
+        ]
+    }
+]}

@@ -1,0 +1,20 @@
+{"sessions": [
+    {
+        "date": "07/07/25",
+        "exercises": [{
+            "reps": 4,
+            "sets": 3,
+            "name": "test",
+            "weight": 10
+        }]
+    },
+    {
+        "date": "08/08/25",
+        "exercises": [{
+            "reps": 10,
+            "sets": 5,
+            "name": "test2",
+            "weight": 10
+        }]
+    }
+]}

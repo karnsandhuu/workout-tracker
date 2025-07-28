@@ -38,7 +38,7 @@ public class JsonReaderTest {
         try {
             WorkoutLog log = reader.read();
             List<WorkoutSession> sessions = log.getSessions();
-            assertEquals(1, sessions.size());
+            assertEquals(2, sessions.size());
 
             WorkoutSession s1 = sessions.get(0);
             assertEquals("2025-07-20", s1.getDate());

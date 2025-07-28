@@ -33,7 +33,7 @@ public class WorkoutTrackerGUI extends JFrame {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         sidebar = new JTabbedPane();
-        sidebar.setTabPlacement(JTabbedPane.LEFT);
+        sidebar.setTabPlacement(JTabbedPane.BOTTOM);
         loadTabs();
         add(sidebar);
         workoutLog = new WorkoutLog();
