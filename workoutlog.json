@@ -1,9 +1,3 @@
-{"sessions": [{
-    "date": "12/12/12",
-    "exercises": [{
-        "reps": 5,
-        "sets": 12,
-        "name": "bench",
-        "weight": 135
-    }]
-}]}
+{
+    "sessions": []
+}

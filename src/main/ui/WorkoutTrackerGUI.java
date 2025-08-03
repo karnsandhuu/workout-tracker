@@ -28,8 +28,9 @@ import model.WorkoutSession;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-// WorkoutTrackerGUI is the main window for this workout tracker app.
-// It allows the user to add exercises, view workout sessions, and save/load data.
+// WorkoutTrackerGUI is the main GUI for this workout tracker app.
+// It allows the user to add exercises, view workout sessions, 
+// seaching for dates when an exercise was performed, and save/load data.
 public class WorkoutTrackerGUI extends JFrame {
     public static final int ADD_TAB_INDEX = 0;
     public static final int REPORT_TAB_INDEX = 1;
@@ -103,7 +104,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return panel;
     }
 
-    // EFFECTS: creates form panel for user input fields
+    // EFFECTS: creates form panel for user input
     private JPanel createFormPanel(JTextField date, JTextField name,
             JTextField reps, JTextField sets, JTextField weight) {
         JPanel formPanel = new JPanel(new GridLayout(5, 1, 2, 8));
@@ -116,7 +117,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return formPanel;
     }
 
-    // EFFECTS: creates the Add Exercise button with its logic
+    // EFFECTS: creates the Add Exercise button
     private JButton createAddExerciseButton(JTextField dateField, JTextField nameField,
             JTextField repsField, JTextField setsField,
             JTextField weightField) {
@@ -175,7 +176,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return panel;
     }
 
-    // EFFECTS: creates "Show Exercises" button with action
+    // EFFECTS: creates "Show Exercises" button and its functionality
     private JButton createShowExercisesButton() {
         JButton showButton = new JButton("Show Exercises");
         showButton.setPreferredSize(new Dimension(150, 50));
@@ -210,7 +211,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return report.toString();
     }
 
-    // EFFECTS: wraps buttons (like Show and Search) in a top panel
+    // EFFECTS: wraps buttons in a top panel
     private JPanel wrapWithTopPanel(JButton showButton, JPanel searchPanel) {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
@@ -221,6 +222,7 @@ public class WorkoutTrackerGUI extends JFrame {
     }
 
     // EFFECTS: creates a search panel to find all dates an exercise was performed
+    @SuppressWarnings("methodlength")
     private JPanel createSearchExercisePanel() {
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchPanel.setBackground(Color.WHITE);
@@ -255,7 +257,6 @@ public class WorkoutTrackerGUI extends JFrame {
 
     // MODIFIES: workoutLog, currentSession, statusLabel
     // EFFECTS: creates the Save/Load/Clear Log tab using helper methods
-    @SuppressWarnings("methodlength")
     private JPanel createSettingsTab() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
@@ -274,7 +275,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return panel;
     }
 
-    // EFFECTS: creates Save button with action
+    // EFFECTS: creates Save button
     private JButton createSaveButton(JLabel statusLabel) {
         JButton saveButton = makeStyledButton("Save Log", "Save");
 
@@ -293,7 +294,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return saveButton;
     }
 
-    // EFFECTS: creates Load button with action
+    // EFFECTS: creates Load button
     private JButton createLoadButton(JLabel statusLabel) {
         JButton loadButton = makeStyledButton("Load Log", "Load");
 
@@ -311,7 +312,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return loadButton;
     }
 
-    // EFFECTS: creates Clear button with action
+    // EFFECTS: creates Clear button
     private JButton createClearButton(JLabel statusLabel) {
         JButton clearButton = makeStyledButton("Clear Log", "Clear");
 
@@ -350,6 +351,7 @@ public class WorkoutTrackerGUI extends JFrame {
         wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
         wrapper.setBackground(Color.WHITE);
 
+        wrapper.add(Box.createVerticalGlue());
         wrapper.add(Box.createVerticalGlue());
         wrapper.add(innerPanel);
         wrapper.add(Box.createVerticalGlue());

@@ -1,9 +1,5 @@
 package model;
 
-import model.Exercise;
-import model.WorkoutLog;
-import model.WorkoutSession;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.JsonWriter;
