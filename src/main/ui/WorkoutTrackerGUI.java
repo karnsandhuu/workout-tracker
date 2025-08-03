@@ -1,7 +1,26 @@
 package ui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import model.Exercise;
 import model.WorkoutLog;
@@ -39,7 +58,7 @@ public class WorkoutTrackerGUI extends JFrame {
         getRootPane().setBorder(BorderFactory.createEmptyBorder());
         getContentPane().setBackground(Color.WHITE);
         workoutLog = new WorkoutLog();
-        
+
         setVisible(true);
     }
 
@@ -55,14 +74,13 @@ public class WorkoutTrackerGUI extends JFrame {
         sidebar.add(createSettingsTab(), SETTINGS_TAB_INDEX);
         sidebar.setTitleAt(SETTINGS_TAB_INDEX, "Load/Save");
 
-        sidebar.setPreferredSize(new Dimension(150, 50)); 
+        sidebar.setPreferredSize(new Dimension(150, 50));
         sidebar.setFont(new Font("Arial", Font.BOLD, 14));
     }
 
     // REQUIRES: user must input valid integers for reps, sets, and weight
     // MODIFIES: this, workoutLog, currentSession
-    // EFFECTS: creates the Add Workout tab
-    @SuppressWarnings("methodlength")
+    // EFFECTS: creates the Add Workout tab using helper methods
     private JPanel createAddWorkoutTab() {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
@@ -74,19 +92,39 @@ public class WorkoutTrackerGUI extends JFrame {
         JTextField setsField = new JTextField(5);
         JTextField weightField = new JTextField(5);
 
+        JPanel formPanel = createFormPanel(dateField, nameField, repsField, setsField, weightField);
+        JButton addButton = createAddExerciseButton(dateField, nameField, repsField, setsField, weightField);
+        JPanel imagePanel = createImagePanel();
+
+        panel.add(formPanel);
+        panel.add(formatButtonRow(addButton));
+        panel.add(imagePanel);
+
+        return panel;
+    }
+
+    // EFFECTS: creates form panel for user input fields
+    private JPanel createFormPanel(JTextField date, JTextField name,
+            JTextField reps, JTextField sets, JTextField weight) {
         JPanel formPanel = new JPanel(new GridLayout(5, 1, 2, 8));
         formPanel.setBackground(Color.WHITE);
-        formPanel.add(createRow("Date (MM/DD/YY):", dateField));
-        formPanel.add(createRow("Exercise:", nameField));
-        formPanel.add(createRow("Reps:", repsField));
-        formPanel.add(createRow("Sets:", setsField));
-        formPanel.add(createRow("Weight (lbs):", weightField));
+        formPanel.add(createRow("Date (MM/DD/YY):", date));
+        formPanel.add(createRow("Exercise:", name));
+        formPanel.add(createRow("Reps:", reps));
+        formPanel.add(createRow("Sets:", sets));
+        formPanel.add(createRow("Weight (lbs):", weight));
+        return formPanel;
+    }
 
-
+    // EFFECTS: creates the Add Exercise button with its logic
+    private JButton createAddExerciseButton(JTextField dateField, JTextField nameField,
+            JTextField repsField, JTextField setsField,
+            JTextField weightField) {
         JButton addButton = new JButton("Add Exercise");
-        addButton.setPreferredSize(new Dimension(150, 50)); 
+        addButton.setPreferredSize(new Dimension(150, 50));
         addButton.setFont(new Font("Arial", Font.BOLD, 14));
         addButton.setActionCommand("AddExercise");
+
         addButton.addActionListener(e -> {
             if (e.getActionCommand().equals("AddExercise")) {
                 String date = dateField.getText();
@@ -104,143 +142,220 @@ public class WorkoutTrackerGUI extends JFrame {
             }
         });
 
+        return addButton;
+    }
+
+    // EFFECTS: creates and returns the image panel
+    private JPanel createImagePanel() {
         ImageIcon dumbbellIcon = new ImageIcon("./data/dumbbell.jpg");
         Image scaledImage = dumbbellIcon.getImage().getScaledInstance(300, 150, Image.SCALE_SMOOTH);
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
+
         JPanel imagePanel = new JPanel();
         imagePanel.setBackground(Color.WHITE);
         imagePanel.add(imageLabel);
-
-        panel.add(formPanel);
-        panel.add(formatButtonRow(addButton));
-        panel.add(imagePanel);
-
-        return panel;
+        return imagePanel;
     }
 
     // MODIFIES: reportText
-    // EFFECTS: creates the Workout Report tab
-    @SuppressWarnings("methodlength")
+    // EFFECTS: creates the Workout Report tab using helper methods
     private JPanel createReportTab() {
         JPanel panel = new JPanel(new BorderLayout());
-
-        JButton showButton = new JButton("Show Exercises");
-        showButton.setPreferredSize(new Dimension(150, 50)); 
-        showButton.setFont(new Font("Arial", Font.BOLD, 14));
-        showButton.setActionCommand("ShowExercises");
 
         reportText = new JTextArea(10, 40);
         reportText.setEditable(true);
         reportPane = new JScrollPane(reportText);
         reportText.setOpaque(true);
 
+        JButton showButton = createShowExercisesButton();
+        JPanel topPanel = wrapWithTopPanel(showButton, createSearchExercisePanel());
+
+        panel.add(topPanel, BorderLayout.NORTH);
+        panel.add(reportPane, BorderLayout.CENTER);
+        return panel;
+    }
+
+    // EFFECTS: creates "Show Exercises" button with action
+    private JButton createShowExercisesButton() {
+        JButton showButton = new JButton("Show Exercises");
+        showButton.setPreferredSize(new Dimension(150, 50));
+        showButton.setFont(new Font("Arial", Font.BOLD, 14));
+        showButton.setActionCommand("ShowExercises");
+
         showButton.addActionListener(e -> {
             if (e.getActionCommand().equals("ShowExercises")) {
                 if (workoutLog.getSessionCount() > 0) {
-                    StringBuilder report = new StringBuilder();
-                    for (WorkoutSession session : workoutLog.getSessions()) {
-                        report.append("Date: ").append(session.getDate()).append("\n");
-                        for (Exercise exercise : session.getExercises()) {
-                            report.append("- ").append(exercise.getName())
-                                    .append(": ").append(exercise.getSets()).append(" sets of ")
-                                    .append(exercise.getReps()).append(" reps with ")
-                                    .append(exercise.getWeight()).append(" lbs\n");
-                        }
-                    }
-                    reportText.setText(report.toString());
+                    reportText.setText(generateAllWorkoutReport());
                 } else {
                     reportText.setText("No workout sessions available.");
                 }
             }
         });
 
-        panel.add(formatButtonRow(showButton), BorderLayout.NORTH);
-        panel.add(reportPane, BorderLayout.CENTER);
-        return panel;
+        return showButton;
     }
 
+    // EFFECTS: generates full report of all workouts
+    private String generateAllWorkoutReport() {
+        StringBuilder report = new StringBuilder();
+        for (WorkoutSession session : workoutLog.getSessions()) {
+            report.append("Date: ").append(session.getDate()).append("\n");
+            for (Exercise exercise : session.getExercises()) {
+                report.append("- ").append(exercise.getName())
+                        .append(": ").append(exercise.getSets()).append(" sets of ")
+                        .append(exercise.getReps()).append(" reps with ")
+                        .append(exercise.getWeight()).append(" lbs\n");
+            }
+        }
+        return report.toString();
+    }
+
+    // EFFECTS: wraps buttons (like Show and Search) in a top panel
+    private JPanel wrapWithTopPanel(JButton showButton, JPanel searchPanel) {
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBackground(Color.WHITE);
+        topPanel.add(formatButtonRow(showButton));
+        topPanel.add(searchPanel);
+        return topPanel;
+    }
+
+    // EFFECTS: creates a search panel to find all dates an exercise was performed
+    private JPanel createSearchExercisePanel() {
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        searchPanel.setBackground(Color.WHITE);
+
+        JTextField searchField = new JTextField(10);
+        JButton searchButton = new JButton("Search Dates");
+        searchButton.setPreferredSize(new Dimension(150, 30));
+        searchButton.setFont(new Font("Arial", Font.BOLD, 12));
+
+        searchButton.addActionListener(e -> {
+            String exerciseName = searchField.getText().trim();
+            if (!exerciseName.isEmpty()) {
+                List<String> dates = workoutLog.getSessionDatesWithExercise(exerciseName);
+                if (!dates.isEmpty()) {
+                    StringBuilder result = new StringBuilder("Performed on:\n");
+                    for (String date : dates) {
+                        result.append("- ").append(date).append("\n");
+                    }
+                    reportText.setText(result.toString());
+                } else {
+                    reportText.setText("Exercise not found.");
+                }
+            }
+        });
+
+        searchPanel.add(new JLabel("Exercise Name:"));
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton);
+
+        return searchPanel;
+    }
 
     // MODIFIES: workoutLog, currentSession, statusLabel
-    // EFFECTS: creates the Save/Load/Clear Log tab
+    // EFFECTS: creates the Save/Load/Clear Log tab using helper methods
     @SuppressWarnings("methodlength")
     private JPanel createSettingsTab() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
 
-        JButton saveButton = new JButton("Save Log");
-        saveButton.setPreferredSize(new Dimension(150, 50));
-        saveButton.setFont(new Font("Arial", Font.BOLD, 14));
-        saveButton.setActionCommand("Save");
-
-        JButton loadButton = new JButton("Load Log");
-        loadButton.setPreferredSize(new Dimension(150, 50)); 
-        loadButton.setFont(new Font("Arial", Font.BOLD, 14));
-        loadButton.setActionCommand("Load");
-
-        JButton clearButton = new JButton("Clear Log");
-        clearButton.setPreferredSize(new Dimension(150, 50)); 
-        clearButton.setFont(new Font("Arial", Font.BOLD, 14));
-        clearButton.setActionCommand("Clear");
-
         JLabel statusLabel = new JLabel("Status: Ready");
 
-        saveButton.addActionListener(e -> {
-            if (e.getActionCommand().equals("Save")) {
-                try {
-                    JsonWriter writer = new JsonWriter(SAVE_FILE);
-                    writer.open();
-                    writer.write(workoutLog);
-                    writer.close();
-                    statusLabel.setText("Status: Saved successfully.");
-                } catch (Exception ex) {
-                    statusLabel.setText("Status: Save failed.");
-                }
-            }
-        });
+        JButton saveButton = createSaveButton(statusLabel);
+        JButton loadButton = createLoadButton(statusLabel);
+        JButton clearButton = createClearButton(statusLabel);
 
-        loadButton.addActionListener(e -> {
-            if (e.getActionCommand().equals("Load")) {
-                try {
-                    JsonReader reader = new JsonReader(SAVE_FILE);
-                    workoutLog = reader.read();
-                    currentSession = null;
-                    statusLabel.setText("Status: Log loaded.");
-                } catch (Exception ex) {
-                    statusLabel.setText("Status: Load failed.");
-                }
-            }
-        });
+        JPanel buttonPanel = formatCenteredButtonRow(saveButton, loadButton, clearButton);
+        JPanel centerWrapper = wrapButtonsWithVerticalGlue(buttonPanel);
 
-        clearButton.addActionListener(e -> {
-            if (e.getActionCommand().equals("Clear")) {
-                workoutLog = new WorkoutLog();
-                currentSession = null;
-                reportText.setText("Workout log cleared.");
-                statusLabel.setText("Status: Log cleared.");
-            }
-        });
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
-    buttonPanel.setBackground(Color.WHITE);
-    buttonPanel.add(saveButton);
-    buttonPanel.add(loadButton);
-    buttonPanel.add(clearButton);
-    
-    // Use BoxLayout to center vertically with glue
-    JPanel centerWrapper = new JPanel();
-    centerWrapper.setLayout(new BoxLayout(centerWrapper, BoxLayout.Y_AXIS));
-    centerWrapper.setBackground(Color.WHITE);
-    
-    centerWrapper.add(Box.createVerticalGlue()); // Push content down
-    centerWrapper.add(Box.createVerticalGlue());
-    centerWrapper.add(buttonPanel);
-    centerWrapper.add(Box.createVerticalGlue()); // Push content up
-
-    panel.add(centerWrapper, BorderLayout.CENTER);
-    panel.add(statusLabel, BorderLayout.SOUTH);
-    return panel;
+        panel.add(centerWrapper, BorderLayout.CENTER);
+        panel.add(statusLabel, BorderLayout.SOUTH);
+        return panel;
     }
 
+    // EFFECTS: creates Save button with action
+    private JButton createSaveButton(JLabel statusLabel) {
+        JButton saveButton = makeStyledButton("Save Log", "Save");
+
+        saveButton.addActionListener(e -> {
+            try {
+                JsonWriter writer = new JsonWriter(SAVE_FILE);
+                writer.open();
+                writer.write(workoutLog);
+                writer.close();
+                statusLabel.setText("Status: Saved successfully.");
+            } catch (Exception ex) {
+                statusLabel.setText("Status: Save failed.");
+            }
+        });
+
+        return saveButton;
+    }
+
+    // EFFECTS: creates Load button with action
+    private JButton createLoadButton(JLabel statusLabel) {
+        JButton loadButton = makeStyledButton("Load Log", "Load");
+
+        loadButton.addActionListener(e -> {
+            try {
+                JsonReader reader = new JsonReader(SAVE_FILE);
+                workoutLog = reader.read();
+                currentSession = null;
+                statusLabel.setText("Status: Log loaded.");
+            } catch (Exception ex) {
+                statusLabel.setText("Status: Load failed.");
+            }
+        });
+
+        return loadButton;
+    }
+
+    // EFFECTS: creates Clear button with action
+    private JButton createClearButton(JLabel statusLabel) {
+        JButton clearButton = makeStyledButton("Clear Log", "Clear");
+
+        clearButton.addActionListener(e -> {
+            workoutLog = new WorkoutLog();
+            currentSession = null;
+            reportText.setText("Workout log cleared.");
+            statusLabel.setText("Status: Log cleared.");
+        });
+
+        return clearButton;
+    }
+
+    // EFFECTS: returns a button with standard style
+    private JButton makeStyledButton(String label, String actionCommand) {
+        JButton button = new JButton(label);
+        button.setPreferredSize(new Dimension(150, 50));
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setActionCommand(actionCommand);
+        return button;
+    }
+
+    // EFFECTS: formats three buttons into a centered row
+    private JPanel formatCenteredButtonRow(JButton... buttons) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        panel.setBackground(Color.WHITE);
+        for (JButton button : buttons) {
+            panel.add(button);
+        }
+        return panel;
+    }
+
+    // EFFECTS: wraps buttons with vertical glue to center vertically
+    private JPanel wrapButtonsWithVerticalGlue(JPanel innerPanel) {
+        JPanel wrapper = new JPanel();
+        wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
+        wrapper.setBackground(Color.WHITE);
+
+        wrapper.add(Box.createVerticalGlue());
+        wrapper.add(innerPanel);
+        wrapper.add(Box.createVerticalGlue());
+
+        return wrapper;
+    }
 
     // EFFECTS: creates and returns a row with a label and a text box
     private JPanel createRow(String labelText, JTextField textField) {
