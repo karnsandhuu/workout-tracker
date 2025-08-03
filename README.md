@@ -36,5 +36,7 @@ This project interests me because I recently started my own working out journey.
 - You can generate the first required action related to the user story "adding multiple Exercises to a WorkoutSession" by clicking "Add Exercise" in the "Add Workout" tab.
 - You can generate the second required action by clicking "Show Exercises" in the "Workout Report" tab to view all exercises per session.
 - You can locate my visual component (a dumbbell image) on the "Add Workout" tab below the input fields.
+- You can search for all workout dates where a specific exercise was performed using the "Search Dates" button in the "Workout Report" tab.
 - You can save the state of my application by clicking the "Save Log" button in the "Load/Save" tab.
 - You can reload the state of my application by clicking the "Load Log" button in the "Load/Save" tab.
+- You can clear the current workout log by clicking the "Clear Log" button in the "Load/Save" tab.
