@@ -36,7 +36,10 @@ public class WorkoutTrackerGUI extends JFrame {
         sidebar.setTabPlacement(JTabbedPane.BOTTOM);
         loadTabs();
         add(sidebar);
+        getRootPane().setBorder(BorderFactory.createEmptyBorder());
+        getContentPane().setBackground(Color.WHITE);
         workoutLog = new WorkoutLog();
+        
         setVisible(true);
     }
 
@@ -51,6 +54,9 @@ public class WorkoutTrackerGUI extends JFrame {
 
         sidebar.add(createSettingsTab(), SETTINGS_TAB_INDEX);
         sidebar.setTitleAt(SETTINGS_TAB_INDEX, "Load/Save");
+
+        sidebar.setPreferredSize(new Dimension(150, 50)); 
+        sidebar.setFont(new Font("Arial", Font.BOLD, 14));
     }
 
     // REQUIRES: user must input valid integers for reps, sets, and weight
@@ -59,6 +65,7 @@ public class WorkoutTrackerGUI extends JFrame {
     @SuppressWarnings("methodlength")
     private JPanel createAddWorkoutTab() {
         JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JTextField dateField = new JTextField(10);
@@ -68,13 +75,17 @@ public class WorkoutTrackerGUI extends JFrame {
         JTextField weightField = new JTextField(5);
 
         JPanel formPanel = new JPanel(new GridLayout(5, 1, 2, 8));
+        formPanel.setBackground(Color.WHITE);
         formPanel.add(createRow("Date (MM/DD/YY):", dateField));
         formPanel.add(createRow("Exercise:", nameField));
         formPanel.add(createRow("Reps:", repsField));
         formPanel.add(createRow("Sets:", setsField));
         formPanel.add(createRow("Weight (lbs):", weightField));
 
+
         JButton addButton = new JButton("Add Exercise");
+        addButton.setPreferredSize(new Dimension(150, 50)); 
+        addButton.setFont(new Font("Arial", Font.BOLD, 14));
         addButton.setActionCommand("AddExercise");
         addButton.addActionListener(e -> {
             if (e.getActionCommand().equals("AddExercise")) {
@@ -97,6 +108,7 @@ public class WorkoutTrackerGUI extends JFrame {
         Image scaledImage = dumbbellIcon.getImage().getScaledInstance(300, 150, Image.SCALE_SMOOTH);
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         JPanel imagePanel = new JPanel();
+        imagePanel.setBackground(Color.WHITE);
         imagePanel.add(imageLabel);
 
         panel.add(formPanel);
@@ -113,11 +125,14 @@ public class WorkoutTrackerGUI extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
 
         JButton showButton = new JButton("Show Exercises");
+        showButton.setPreferredSize(new Dimension(150, 50)); 
+        showButton.setFont(new Font("Arial", Font.BOLD, 14));
         showButton.setActionCommand("ShowExercises");
 
         reportText = new JTextArea(10, 40);
         reportText.setEditable(true);
         reportPane = new JScrollPane(reportText);
+        reportText.setOpaque(true);
 
         showButton.addActionListener(e -> {
             if (e.getActionCommand().equals("ShowExercises")) {
@@ -150,14 +165,21 @@ public class WorkoutTrackerGUI extends JFrame {
     @SuppressWarnings("methodlength")
     private JPanel createSettingsTab() {
         JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.WHITE);
 
         JButton saveButton = new JButton("Save Log");
+        saveButton.setPreferredSize(new Dimension(150, 50));
+        saveButton.setFont(new Font("Arial", Font.BOLD, 14));
         saveButton.setActionCommand("Save");
 
         JButton loadButton = new JButton("Load Log");
+        loadButton.setPreferredSize(new Dimension(150, 50)); 
+        loadButton.setFont(new Font("Arial", Font.BOLD, 14));
         loadButton.setActionCommand("Load");
 
         JButton clearButton = new JButton("Clear Log");
+        clearButton.setPreferredSize(new Dimension(150, 50)); 
+        clearButton.setFont(new Font("Arial", Font.BOLD, 14));
         clearButton.setActionCommand("Clear");
 
         JLabel statusLabel = new JLabel("Status: Ready");
@@ -198,14 +220,25 @@ public class WorkoutTrackerGUI extends JFrame {
             }
         });
 
-        JPanel buttons = new JPanel(new FlowLayout());
-        buttons.add(saveButton);
-        buttons.add(loadButton);
-        buttons.add(clearButton);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+    buttonPanel.setBackground(Color.WHITE);
+    buttonPanel.add(saveButton);
+    buttonPanel.add(loadButton);
+    buttonPanel.add(clearButton);
+    
+    // Use BoxLayout to center vertically with glue
+    JPanel centerWrapper = new JPanel();
+    centerWrapper.setLayout(new BoxLayout(centerWrapper, BoxLayout.Y_AXIS));
+    centerWrapper.setBackground(Color.WHITE);
+    
+    centerWrapper.add(Box.createVerticalGlue()); // Push content down
+    centerWrapper.add(Box.createVerticalGlue());
+    centerWrapper.add(buttonPanel);
+    centerWrapper.add(Box.createVerticalGlue()); // Push content up
 
-        panel.add(buttons, BorderLayout.CENTER);
-        panel.add(statusLabel, BorderLayout.SOUTH);
-        return panel;
+    panel.add(centerWrapper, BorderLayout.CENTER);
+    panel.add(statusLabel, BorderLayout.SOUTH);
+    return panel;
     }
 
 
@@ -213,6 +246,7 @@ public class WorkoutTrackerGUI extends JFrame {
     private JPanel createRow(String labelText, JTextField textField) {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
         row.add(new JLabel(labelText));
+        row.setBackground(Color.WHITE);
         row.add(textField);
         return row;
     }
@@ -220,6 +254,7 @@ public class WorkoutTrackerGUI extends JFrame {
     // EFFECTS: returns a panel that puts a button in a row
     private JPanel formatButtonRow(JButton b) {
         JPanel p = new JPanel(new FlowLayout());
+        p.setBackground(Color.WHITE);
         p.add(b);
         return p;
     }
