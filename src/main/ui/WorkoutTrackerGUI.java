@@ -172,6 +172,7 @@ public class WorkoutTrackerGUI extends JFrame {
 
         return panel;
     }
+    
 
     // MODIFIES: workoutLog, currentSession, statusLabel
     // EFFECTS: creates and returns the save/load tab
@@ -183,6 +184,8 @@ public class WorkoutTrackerGUI extends JFrame {
         saveButton.setActionCommand("Save");
         JButton loadButton = new JButton("Load Log");
         loadButton.setActionCommand("Load");
+        JButton clearButton = new JButton("Clear Log");
+        clearButton.setActionCommand("Clear");
 
         JLabel statusLabel = new JLabel("Status: Ready");
 
@@ -213,9 +216,21 @@ public class WorkoutTrackerGUI extends JFrame {
             }
         });
 
+        clearButton.addActionListener(e -> {
+            if (e.getActionCommand().equals("Clear")) {
+                workoutLog = new WorkoutLog();
+                currentSession = null;
+                reportText.setText("Workout log cleared.");
+                statusLabel.setText("Status: Log cleared.");
+            }
+        });
+
+        
+
         JPanel buttons = new JPanel(new FlowLayout());
         buttons.add(saveButton);
         buttons.add(loadButton);
+        buttons.add(clearButton);
 
         panel.add(buttons, BorderLayout.NORTH);
         panel.add(statusLabel, BorderLayout.SOUTH);
