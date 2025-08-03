@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.*;
 
 import model.Exercise;
 import model.WorkoutLog;
@@ -8,17 +9,15 @@ import model.WorkoutSession;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.awt.*;
-
-//  WorkoutTrackerGUI is the main window for this workout tracker app
+// WorkoutTrackerGUI is the main window for this workout tracker app.
 // It allows the user to add exercises, view workout sessions, and save/load data.
 public class WorkoutTrackerGUI extends JFrame {
     public static final int ADD_TAB_INDEX = 0;
-    public static final int WIDTH = 600;
-    public static final int HEIGHT = 500;
     public static final int REPORT_TAB_INDEX = 1;
     public static final int SETTINGS_TAB_INDEX = 2;
 
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 500;
     public static final String SAVE_FILE = "./workoutlog.json";
 
     private JTextArea reportText;
@@ -28,6 +27,7 @@ public class WorkoutTrackerGUI extends JFrame {
     private JTabbedPane sidebar;
     private WorkoutLog workoutLog;
 
+    // Constructor
     public WorkoutTrackerGUI() {
         setTitle("Workout Tracker");
         setSize(WIDTH, HEIGHT);
@@ -37,34 +37,27 @@ public class WorkoutTrackerGUI extends JFrame {
         loadTabs();
         add(sidebar);
         workoutLog = new WorkoutLog();
-
         setVisible(true);
     }
 
     // MODIFIES: sidebar
-    // EFFECTS: loads and adds the Add Workout, Report, and Save/Load tabs to the
-    // sidebar.
+    // EFFECTS: loads and adds the Add Workout, Report, and Save/Load tabs
     private void loadTabs() {
-        JPanel addWorkoutTab = createAddWorkoutTab();
-        sidebar.add(addWorkoutTab, ADD_TAB_INDEX);
+        sidebar.add(createAddWorkoutTab(), ADD_TAB_INDEX);
         sidebar.setTitleAt(ADD_TAB_INDEX, "Add Workout");
-        JPanel reportTab = createReportTab();
 
-        sidebar.add(reportTab, REPORT_TAB_INDEX);
+        sidebar.add(createReportTab(), REPORT_TAB_INDEX);
         sidebar.setTitleAt(REPORT_TAB_INDEX, "Workout Report");
 
-        JPanel settingsTab = createSettingsTab();
-        sidebar.add(settingsTab, SETTINGS_TAB_INDEX);
+        sidebar.add(createSettingsTab(), SETTINGS_TAB_INDEX);
         sidebar.setTitleAt(SETTINGS_TAB_INDEX, "Load/Save");
     }
 
     // REQUIRES: user must input valid integers for reps, sets, and weight
     // MODIFIES: this, workoutLog, currentSession
-    // EFFECTS: creates a panel for adding workout sessions and exercises and then
-    // returns it
+    // EFFECTS: creates the Add Workout tab
     @SuppressWarnings("methodlength")
     private JPanel createAddWorkoutTab() {
-
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -83,16 +76,13 @@ public class WorkoutTrackerGUI extends JFrame {
 
         JButton addButton = new JButton("Add Exercise");
         addButton.setActionCommand("AddExercise");
-
         addButton.addActionListener(e -> {
-            String buttonPressed = e.getActionCommand();
-
-            if (buttonPressed.equals("AddExercise")) {
+            if (e.getActionCommand().equals("AddExercise")) {
                 String date = dateField.getText();
                 String name = nameField.getText();
-                int reps = Integer.parseInt((repsField.getText()));
-                int sets = Integer.parseInt((setsField.getText()));
-                int weight = Integer.parseInt((weightField.getText()));
+                int reps = Integer.parseInt(repsField.getText());
+                int sets = Integer.parseInt(setsField.getText());
+                int weight = Integer.parseInt(weightField.getText());
 
                 if (currentSession == null || !currentSession.getDate().equals(date)) {
                     currentSession = new WorkoutSession(date);
@@ -100,14 +90,12 @@ public class WorkoutTrackerGUI extends JFrame {
                 }
                 Exercise newExercise = new Exercise(name, reps, sets, weight);
                 currentSession.addExercise(newExercise);
-
             }
         });
 
         ImageIcon dumbbellIcon = new ImageIcon("./data/dumbbell.jpg");
         Image scaledImage = dumbbellIcon.getImage().getScaledInstance(300, 150, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(scaledImage);
-        JLabel imageLabel = new JLabel(resizedIcon);
+        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         JPanel imagePanel = new JPanel();
         imagePanel.add(imageLabel);
 
@@ -118,24 +106,8 @@ public class WorkoutTrackerGUI extends JFrame {
         return panel;
     }
 
-    // EFFECTS: creates and returns a row with a label and a text box
-    private JPanel createRow(String labelText, JTextField textField) {
-        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        row.add(new JLabel(labelText));
-        row.add(textField);
-        return row;
-    }
-
-    // EFFECTS: returns a panel that puts a button in a row
-    private JPanel formatButtonRow(JButton b) {
-        JPanel p = new JPanel(new FlowLayout());
-        p.add(b);
-        return p;
-
-    }
-
     // MODIFIES: reportText
-    // EFFECTS: creates and returns the report tab panel
+    // EFFECTS: creates the Workout Report tab
     @SuppressWarnings("methodlength")
     private JPanel createReportTab() {
         JPanel panel = new JPanel(new BorderLayout());
@@ -169,21 +141,22 @@ public class WorkoutTrackerGUI extends JFrame {
 
         panel.add(formatButtonRow(showButton), BorderLayout.NORTH);
         panel.add(reportPane, BorderLayout.CENTER);
-
         return panel;
     }
-    
+
 
     // MODIFIES: workoutLog, currentSession, statusLabel
-    // EFFECTS: creates and returns the save/load tab
+    // EFFECTS: creates the Save/Load/Clear Log tab
     @SuppressWarnings("methodlength")
     private JPanel createSettingsTab() {
         JPanel panel = new JPanel(new BorderLayout());
 
         JButton saveButton = new JButton("Save Log");
         saveButton.setActionCommand("Save");
+
         JButton loadButton = new JButton("Load Log");
         loadButton.setActionCommand("Load");
+
         JButton clearButton = new JButton("Clear Log");
         clearButton.setActionCommand("Clear");
 
@@ -225,16 +198,29 @@ public class WorkoutTrackerGUI extends JFrame {
             }
         });
 
-        
-
         JPanel buttons = new JPanel(new FlowLayout());
         buttons.add(saveButton);
         buttons.add(loadButton);
         buttons.add(clearButton);
 
-        panel.add(buttons, BorderLayout.NORTH);
+        panel.add(buttons, BorderLayout.CENTER);
         panel.add(statusLabel, BorderLayout.SOUTH);
         return panel;
     }
 
+
+    // EFFECTS: creates and returns a row with a label and a text box
+    private JPanel createRow(String labelText, JTextField textField) {
+        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        row.add(new JLabel(labelText));
+        row.add(textField);
+        return row;
+    }
+
+    // EFFECTS: returns a panel that puts a button in a row
+    private JPanel formatButtonRow(JButton b) {
+        JPanel p = new JPanel(new FlowLayout());
+        p.add(b);
+        return p;
+    }
 }
