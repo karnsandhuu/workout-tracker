@@ -28,7 +28,7 @@ import model.WorkoutSession;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-// WorkoutTrackerGUI is the main GUI for this workout tracker app.
+// WorkoutTrackerGUI is the GUI for this workout tracker app.
 // It allows the user to add exercises, view workout sessions, 
 // seaching for dates when an exercise was performed, and save/load data.
 public class WorkoutTrackerGUI extends JFrame {
@@ -47,7 +47,6 @@ public class WorkoutTrackerGUI extends JFrame {
     private JTabbedPane sidebar;
     private WorkoutLog workoutLog;
 
-    // Constructor
     public WorkoutTrackerGUI() {
         setTitle("Workout Tracker");
         setSize(WIDTH, HEIGHT);
@@ -169,7 +168,7 @@ public class WorkoutTrackerGUI extends JFrame {
         reportText.setOpaque(true);
 
         JButton showButton = createShowExercisesButton();
-        JPanel topPanel = wrapWithTopPanel(showButton, createSearchExercisePanel());
+        JPanel topPanel = wrapButtonsAtTop(showButton, createSearchExercisePanel());
 
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(reportPane, BorderLayout.CENTER);
@@ -211,8 +210,8 @@ public class WorkoutTrackerGUI extends JFrame {
         return report.toString();
     }
 
-    // EFFECTS: wraps buttons in a top panel
-    private JPanel wrapWithTopPanel(JButton showButton, JPanel searchPanel) {
+    // EFFECTS: wraps show button and seaech button in a panel at the top
+    private JPanel wrapButtonsAtTop(JButton showButton, JPanel searchPanel) {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         topPanel.setBackground(Color.WHITE);
