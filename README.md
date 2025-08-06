@@ -40,3 +40,13 @@ This project interests me because I recently started my own working out journey.
 - You can save the state of my application by clicking the "Save Log" button in the "Load/Save" tab.
 - You can reload the state of my application by clicking the "Load Log" button in the "Load/Save" tab.
 - You can clear the current workout log by clicking the "Clear Log" button in the "Load/Save" tab.
+
+## Phase 4: Task 2
+
+Event Log:
+Tue Aug 05 23:05:04 PDT 2025
+Workout session added: 07/25/25
+Tue Aug 05 23:05:04 PDT 2025
+Exercise added to 07/25/25: Bench Press (3 sets, 10 reps, 135 lbs)
+Tue Aug 05 23:05:07 PDT 2025
+Workout log cleared
