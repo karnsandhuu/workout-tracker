@@ -70,6 +70,13 @@ public class WorkoutLog {
         return sameDates;
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes all workout sessions from the log and logs the event
+    public void clear() {
+        sessions.clear();
+        EventLog.getInstance().logEvent(new Event("Workout log cleared"));
+    }
+
     // EFFECTS: returns this workout log as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

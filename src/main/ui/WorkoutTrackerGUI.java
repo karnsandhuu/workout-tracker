@@ -22,11 +22,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import model.EventLog;
 import model.Exercise;
 import model.WorkoutLog;
 import model.WorkoutSession;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+
+import model.Event;
+import model.EventLog;
 
 // WorkoutTrackerGUI is the GUI for this workout tracker app.
 // It allows the user to add exercises, view workout sessions, 
@@ -51,13 +55,24 @@ public class WorkoutTrackerGUI extends JFrame {
         setTitle("Workout Tracker");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        sidebar = new JTabbedPane(); 
+        sidebar = new JTabbedPane();
         sidebar.setTabPlacement(JTabbedPane.BOTTOM);
         loadTabs();
         add(sidebar);
         getRootPane().setBorder(BorderFactory.createEmptyBorder());
         getContentPane().setBackground(Color.LIGHT_GRAY);
         workoutLog = new WorkoutLog();
+
+        // Logs printed when window closes
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                System.out.println("Event Log:");
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event);
+                }
+            }
+        });
 
         setVisible(true);
     }
@@ -105,7 +120,7 @@ public class WorkoutTrackerGUI extends JFrame {
 
     // EFFECTS: creates form panel for user input
     private JPanel createFormPanel(JTextField date, JTextField name,
-        JTextField reps, JTextField sets, JTextField weight) {
+            JTextField reps, JTextField sets, JTextField weight) {
         JPanel formPanel = new JPanel(new GridLayout(5, 1, 2, 8));
         formPanel.setBackground(Color.WHITE);
         formPanel.add(createRow("Date (MM/DD/YY):", date));
@@ -316,7 +331,7 @@ public class WorkoutTrackerGUI extends JFrame {
         JButton clearButton = makeStyledButton("Clear Log", "Clear");
 
         clearButton.addActionListener(e -> {
-            workoutLog = new WorkoutLog();
+            workoutLog.clear();
             currentSession = null;
             reportText.setText("Workout log cleared.");
             statusLabel.setText("Status: Log cleared.");
@@ -374,4 +389,5 @@ public class WorkoutTrackerGUI extends JFrame {
         p.add(b);
         return p;
     }
+
 }
