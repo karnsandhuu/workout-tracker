@@ -6,6 +6,9 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import model.Event;
+import model.EventLog;
+
 // Represents a user's full workout session (multiple different exercises and date)
 public class WorkoutSession {
 
@@ -24,6 +27,11 @@ public class WorkoutSession {
     // EFFECTS: Adds exercise into workout session
     public void addExercise(Exercise exercise) {
         exercises.add(exercise);
+        EventLog.getInstance().logEvent(
+                new Event("Exercise added to " + date + ": " + exercise.getName()
+                        + " (" + exercise.getSets() + " sets, "
+                        + exercise.getReps() + " reps, "
+                        + exercise.getWeight() + " lbs)"));
 
     }
 

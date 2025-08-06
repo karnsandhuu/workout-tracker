@@ -51,12 +51,12 @@ public class WorkoutTrackerGUI extends JFrame {
         setTitle("Workout Tracker");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        sidebar = new JTabbedPane();
+        sidebar = new JTabbedPane(); 
         sidebar.setTabPlacement(JTabbedPane.BOTTOM);
         loadTabs();
         add(sidebar);
         getRootPane().setBorder(BorderFactory.createEmptyBorder());
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.LIGHT_GRAY);
         workoutLog = new WorkoutLog();
 
         setVisible(true);
@@ -105,7 +105,7 @@ public class WorkoutTrackerGUI extends JFrame {
 
     // EFFECTS: creates form panel for user input
     private JPanel createFormPanel(JTextField date, JTextField name,
-            JTextField reps, JTextField sets, JTextField weight) {
+        JTextField reps, JTextField sets, JTextField weight) {
         JPanel formPanel = new JPanel(new GridLayout(5, 1, 2, 8));
         formPanel.setBackground(Color.WHITE);
         formPanel.add(createRow("Date (MM/DD/YY):", date));
@@ -210,7 +210,7 @@ public class WorkoutTrackerGUI extends JFrame {
         return report.toString();
     }
 
-    // EFFECTS: wraps show button and seaech button in a panel at the top
+    // EFFECTS: wraps show button and search button in a panel at the top
     private JPanel wrapButtonsAtTop(JButton showButton, JPanel searchPanel) {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));

@@ -6,6 +6,9 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import model.Event;
+import model.EventLog;
+
 // This represents a workout log containing all of a person's past workout sessions
 public class WorkoutLog {
 
@@ -22,7 +25,8 @@ public class WorkoutLog {
     // EFFECTS: Adds workout session to workout log
     public void addWorkoutSession(WorkoutSession session) {
         sessions.add(session);
-
+        EventLog.getInstance().logEvent(
+                new Event("Workout session added: " + session.getDate()));
     }
 
     // EFFECTS: returns highest weight lifted for given exercise or 0 if exercise is
