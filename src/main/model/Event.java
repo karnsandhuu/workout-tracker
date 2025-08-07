@@ -4,12 +4,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Represents an alarm system event.
+ * Represents an workout tracker event.
  */
 public class Event {
     private static final int HASH_CONSTANT = 13;
     private Date dateLogged;
     private String description;
+
+    // Referenced from the AlarmSystem
+    // https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
 
     /**
      * Creates an event with the given description
