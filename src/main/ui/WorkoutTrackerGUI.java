@@ -32,6 +32,9 @@ import persistence.JsonWriter;
 import model.Event;
 import model.EventLog;
 
+// Referenced from the LongFormProblemSolutions (SmartHome)
+// https://github.students.cs.ubc.ca/CPSC210/LongFormProblemSolutions
+
 // WorkoutTrackerGUI is the GUI for this workout tracker app.
 // It allows the user to add exercises, view workout sessions, 
 // seaching for dates when an exercise was performed, and save/load data.
