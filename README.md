@@ -52,3 +52,9 @@ Wed Aug 06 23:46:13 PDT 2025
 Searched for sessions with exercise: Bench Press
 Wed Aug 06 23:46:15 PDT 2025
 Workout log cleared
+
+## Phase 4: Task 3
+
+My UML diagram shows the final design of my workout tracker app. It includes all the main classes I used, like WorkoutLog, WorkoutSession, Exercise, and the GUI. It also shows the Json classes for saving and loading data, and the event logging classes. The relationships are clear and simple. For example, one workout log has a list of 0 to many sessions, and each session has a list of 0 to many exercises, etc.
+
+If I had more time, I would clean up the code by making the GUI class smaller. Right now, the WorkoutTrackerGUI class does too many things all in one place, like setting up the screen, handling user input, showing reports, and saving or loading data. That makes it a bit messy and harder to understand. A better way would be to split it into smaller classes, like one part for handling what the user types in, another part for saving and loading data, and another for showing the workout report. This would make the code easier to read, easier to fix if something breaks, and easier to change in the future.
