@@ -6,9 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import model.Event;
-import model.EventLog;
-
 // This represents a workout log containing all of a person's past workout sessions
 public class WorkoutLog {
 
@@ -67,6 +64,8 @@ public class WorkoutLog {
                 }
             }
         }
+        EventLog.getInstance().logEvent(
+                new Event("Searched for sessions with exercise: " + exerciseName));
         return sameDates;
     }
 

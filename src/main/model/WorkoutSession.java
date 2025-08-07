@@ -6,8 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import model.Event;
-import model.EventLog;
 
 // Represents a user's full workout session (multiple different exercises and date)
 public class WorkoutSession {

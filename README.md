@@ -44,9 +44,11 @@ This project interests me because I recently started my own working out journey.
 ## Phase 4: Task 2
 
 Event Log:
-Tue Aug 05 23:05:04 PDT 2025
-Workout session added: 07/25/25
-Tue Aug 05 23:05:04 PDT 2025
-Exercise added to 07/25/25: Bench Press (3 sets, 10 reps, 135 lbs)
-Tue Aug 05 23:05:07 PDT 2025
+Wed Aug 06 23:46:08 PDT 2025
+Workout session added: 07/12/25
+Wed Aug 06 23:46:08 PDT 2025
+Exercise added to 07/12/25: Bench Press (3 sets, 10 reps, 135 lbs)
+Wed Aug 06 23:46:13 PDT 2025
+Searched for sessions with exercise: Bench Press
+Wed Aug 06 23:46:15 PDT 2025
 Workout log cleared
