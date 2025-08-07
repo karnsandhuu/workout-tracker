@@ -81,4 +81,20 @@ public class WorkoutLogTest {
 
         assertTrue(result3.isEmpty());
     }
+
+    @Test
+    void testClearWorkoutLog() {
+        WorkoutLog log = new WorkoutLog();
+
+        WorkoutSession session = new WorkoutSession("08/07/25");
+        session.addExercise(new Exercise("Pushups", 10, 3, 0));
+        log.addWorkoutSession(session);
+
+        assertEquals(1, log.getSessionCount());
+
+        log.clear();
+
+        // Verify sessions are cleared
+        assertEquals(0, log.getSessionCount());
+    }
 }
